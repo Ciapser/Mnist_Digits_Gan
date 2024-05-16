@@ -46,7 +46,7 @@ train_images = (train_images-0.5)*2
 os.makedirs('Images', exist_ok=True)
 # Hyperparameters
 latent_dim = 100
-batch_size = 256
+batch_size = 512
 epochs = 100
 sample_interval = 5
 
@@ -144,10 +144,11 @@ def save_plot(examples,directory, epoch, n=10):
         # define subplot
         plt.subplot(n, n, 1 + i)
         # turn off axis
+        plt.axis('off')
         # plot raw pixel data
         plt.imshow(examples[i, :, :])
         # save plot to file
-    filename = os.path.join(directory, 'Epoch: %03d' %epoch )
+    filename = os.path.join(directory, 'Epoch_%03d.png' %epoch )
 
     plt.savefig(filename)
     plt.close()
