@@ -13,7 +13,7 @@ Initial_params = dict(DataBase_directory = "E:\Bazy_Danych\MNIST_Data",
 
 #If train_dataset_multiplier set to one then there is no augmentation
 Augment_params = dict(reduced_set_size = None,
-                      dataset_multiplier = 3,
+                      dataset_multiplier = 1,
                       flipRotate = False,
                       randBright = True,
                       gaussian_noise = True,
