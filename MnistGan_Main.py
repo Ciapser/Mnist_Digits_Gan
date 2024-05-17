@@ -40,15 +40,15 @@ Mnist.Initialize_data()
 x1 = np.load(os.path.join(Mnist.DATA_DIRECTORY , "x_train.npy"))
 x2 = np.load(os.path.join(Mnist.DATA_DIRECTORY , "x_test.npy"))
 
-train_images = np.vstack((x1,x2))
+train_images = (np.vstack((x1,x2))/255).astype("float32")
 train_images = (train_images-0.5)*2
 
 os.makedirs('Images', exist_ok=True)
 # Hyperparameters
 latent_dim = 100
-batch_size = 512
-epochs = 100
-sample_interval = 5
+batch_size = 256
+epochs = 200
+sample_interval = 1
 
 # Build the generator
 def build_generator(latent_dim):
@@ -59,13 +59,13 @@ def build_generator(latent_dim):
     model.add(LeakyReLU(alpha=0.2))
     model.add(Reshape((7, 7, 128)))
     # upsample to 14x14
-    model.add(Conv2DTranspose(128, (4,4), strides=(2,2), padding='same'))
+    model.add(Conv2DTranspose(256, (4,4), strides=(2,2), padding='same'))
     model.add(LeakyReLU(alpha=0.2))
     
-    model.add(Conv2D(128, (4,4), strides=(1,1), padding='same'))
+    model.add(Conv2D(256, (4,4), strides=(1,1), padding='same'))
     model.add(LeakyReLU(alpha=0.2))
     # upsample to 28x28
-    model.add(Conv2DTranspose(128, (4,4), strides=(2,2), padding='same'))
+    model.add(Conv2DTranspose(256, (4,4), strides=(2,2), padding='same'))
     model.add(LeakyReLU(alpha=0.2))
     
     model.add(Conv2D(128, (4,4), strides=(1,1), padding='same'))
@@ -78,19 +78,19 @@ def build_generator(latent_dim):
 # Build the discriminator
 def build_discriminator(in_shape=(28,28,1)):
     model = Sequential()
-    model.add(Conv2D(64, (3,3), strides=(2, 2), padding='same', input_shape=in_shape))
+    model.add(Conv2D(128, (3,3), strides=(2, 2), padding='same', input_shape=in_shape))
     model.add(LeakyReLU(alpha=0.2))
     model.add(Dropout(0.4))
     
-    model.add(Conv2D(64, (3,3), strides=(1, 1), padding='same'))
+    model.add(Conv2D(128, (3,3), strides=(1, 1), padding='same'))
     model.add(LeakyReLU(alpha=0.2))
     model.add(Dropout(0.4))
     
-    model.add(Conv2D(64, (3,3), strides=(2, 2), padding='same'))
+    model.add(Conv2D(256, (3,3), strides=(2, 2), padding='same'))
     model.add(LeakyReLU(alpha=0.2))
     model.add(Dropout(0.4))
     
-    model.add(Conv2D(64, (3,3), strides=(1, 1), padding='same'))
+    model.add(Conv2D(256, (3,3), strides=(1, 1), padding='same'))
     model.add(LeakyReLU(alpha=0.2))
     model.add(Dropout(0.4))
     
@@ -102,15 +102,15 @@ def build_discriminator(in_shape=(28,28,1)):
   
 #Build combined GAN network
 def build_gan(gan_generator ,gan_discriminator):
-    #1
-    #Freeze the discriminator's weights
-    gan_discriminator.trainable = False  
-    
-    gan_input = tf.keras.Input(shape=(latent_dim,))
-    data = generator(gan_input)
-    gan_output = discriminator(data)
-    gan = tf.keras.Model(gan_input, gan_output)
-    return gan
+    # make weights in the discriminator not trainable
+    gan_discriminator.trainable = False
+    # connect them
+    model = Sequential()
+    # add generator
+    model.add(gan_generator)
+    # add the discriminator
+    model.add(gan_discriminator)
+    return model
 
 
 #Generating real samples from dataset
