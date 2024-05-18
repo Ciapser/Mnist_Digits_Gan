@@ -1,4 +1,6 @@
+import sys
 import Config
+sys.path.insert(0, 'C:\\Users\Stacja Robocza\\Desktop\\NeuroUtils\\Tests')
 from NeuroUtils import Core
 
 import numpy as np
@@ -9,17 +11,14 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import Reshape
-from keras.layers import Flatten
+
 from keras.layers import Conv2D
 from keras.layers import Conv2DTranspose
-from keras.layers import LeakyReLU
+
 from keras.layers import Dropout
 from tqdm import tqdm
-import random
-import sys
+
+
 from contextlib import redirect_stdout
 
 #1
@@ -204,7 +203,7 @@ generator = build_generator(latent_dim)
 
 Gan = build_gan(generator, discriminator)
 Gan.compile(loss='binary_crossentropy', optimizer=Adam(0.0002, 0.5))
-
+generator.summary()
 
 
 

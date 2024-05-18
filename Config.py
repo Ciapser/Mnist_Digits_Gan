@@ -15,20 +15,21 @@ Initial_params = dict(DataBase_directory = "E:\Bazy_Danych\MNIST_Data",
 Augment_params = dict(reduced_set_size = None,
                       dataset_multiplier = 1,
                       flipRotate = False,
-                      randBright = True,
-                      gaussian_noise = True,
+                      randBright = False,
+                      gaussian_noise = False,
                       denoise = False,
                       contour = False
                       )
 
 
-Model_parameters = dict(model_architecture = "SimpleMnist",
+Model_parameters = dict(generator_architecture = "Test_generator_28",
+                        discriminator_architecture = "Test_discriminator_28",
                         device = "GPU:0",
                         train = True,
-                        epochs = 30,
-                        patience = 10,
-                        batch_size = 128,
-                        min_delta = 0.0001,
+                        epochs = 100,
+                        latent_dim = 100,
+                        batch_size = 256,
+                        sample_interval = 1,
                         evaluate = True,
                         show_architecture = False
                        )
