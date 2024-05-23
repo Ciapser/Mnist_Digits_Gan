@@ -11,7 +11,7 @@ Initial_params = dict(DataBase_directory = "E:\Bazy_Danych\MNIST_Data",
                       DataType = "float32"
                       )
 
-#If train_dataset_multiplier set to one then there is no augmentation
+#If dataset_multiplier set to one, then there is no augmentation
 Augment_params = dict(reduced_set_size = None,
                       dataset_multiplier = 1,
                       flipRotate = False,
@@ -26,10 +26,11 @@ Model_parameters = dict(generator_architecture = "Test_generator_28",
                         discriminator_architecture = "Test_discriminator_28",
                         device = "GPU:0",
                         train = True,
-                        epochs = 100,
+                        epochs = 200,
                         latent_dim = 100,
                         batch_size = 256,
                         sample_interval = 1,
+                        sample_number = 100,
                         evaluate = True,
                         show_architecture = False
                        )

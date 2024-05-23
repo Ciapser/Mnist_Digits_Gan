@@ -1,1 +1,1 @@
-NeuroUtils==0.1.3
+NeuroUtils==0.1.6
