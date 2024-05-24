@@ -4,9 +4,9 @@ DataSet_Processed/*
 Models_saved/*
 
 Models milestones and benchmark.xlsx
-__pycache__/config.cpython-310.pyc
+__pycache__/*
 
-#Config.py
+Config.py
 #While working on project you can uncomment Config
 
 
