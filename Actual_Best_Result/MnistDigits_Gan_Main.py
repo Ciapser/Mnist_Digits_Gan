@@ -39,18 +39,18 @@ Gan.Initialize_weights_and_training_gan()
 
 #History of model training showed by images, from noise to (hopefully) images
 #similar to real samples 
-history_images , slider = Gan.Initialize_history(show_plot = True,
+history_images , slider = Gan.Initialize_history(show_plot = False,
                                                  plot_size =5,
                                                  create_gif = True,
-                                                 gif_scale = 5,
+                                                 gif_scale = 2,
                                                  gif_fps = 10
                                                  )
 
 #Generated images from actual model
-generated_images = Gan.Initialize_results(show_plot = True,
+generated_images = Gan.Initialize_results(show_plot = False,
                                           plot_size = 10,
                                           saveplot = True,
-                                          plot_scale = 3
+                                          plot_scale = 1
                                           )
 
 
